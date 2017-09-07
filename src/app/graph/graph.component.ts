@@ -5,7 +5,13 @@ import { Component, OnInit, Input } from '@angular/core';
   selector: 'app-graph',
   template: `
     <div>
-      <svg width="200" height="200"></svg>
+      <svg width="200" height="200">
+        <g>
+          <polygon [attr.points]="points"></polygon>
+          <circle cx="100" cy="100" r="80"></circle>
+          <text *ngFor="let stat of stats; index as i" [attr.x]="" [attr.y]="">{{stat.label}}</text>
+        </g>
+      </svg>
     </div>
   `,
   styles: []
