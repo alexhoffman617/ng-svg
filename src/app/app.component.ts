@@ -6,9 +6,11 @@ import { Component } from '@angular/core';
   <h1>
     {{title}}
   </h1>
+  <app-controls></app-controls>
+  <app-graph></app-graph>
   `,
   styles: []
 })
 export class AppComponent {
-  title = 'app works!';
+  title = 'Working with SVGs!';
 }
