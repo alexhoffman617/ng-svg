@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, AfterViewInit, Input } from '@angular/core';
+import { Istat, Ipoint } from 'app/controls/controls.component';
 
 
 @Component({
@@ -9,24 +10,47 @@ import { Component, OnInit, Input } from '@angular/core';
         <g>
           <polygon [attr.points]="points"></polygon>
           <circle cx="100" cy="100" r="80"></circle>
-          <text *ngFor="let stat of stats; index as i" [attr.x]="" [attr.y]="">{{stat.label}}</text>
+          <!-- <text *ngFor="let stat of stats; index as i">{{stat.label}}</text> -->
         </g>
       </svg>
     </div>
   `,
-  styles: []
+  styles: [`
+    polygon {
+      fill: #42b983;
+      opacity: .75; 
+    }
+    circle {
+      fill: transparent;
+      stroke: #999
+    }
+    text {
+      font-family: Helvetica Neue, Arial, sans-serif;
+      font-size: 10px;
+      fill: #666;
+    }
+    label {
+      display: inline-block;
+      margin-left: 10px;
+      width: 20px;
+    }
+  `]
 })
 
-export class GraphComponent implements OnInit {
-  @Input() stats;
+export class GraphComponent implements AfterViewInit {
+  @Input() stats: Istat[];
+  points: string;
+  constructor() {
+  }
 
-  constructor() { }
-
-  ngOnInit() {
+  ngAfterViewInit() {
+    this.points = this.computePoints(this.stats);
+    console.log('points is', this.points);
   }
 
   // math helper...
-valueToPoint (value, index, total) {
+valueToPoint (value: number, index: number, total: number): Ipoint {
+  let point: Ipoint;
   let x     = 0;
   let y     = -value * 0.8;
   let angle = Math.PI * 2 / total * index;
@@ -34,10 +58,20 @@ valueToPoint (value, index, total) {
   let sin   = Math.sin(angle);
   let tx    = x * cos - y * sin + 100;
   let ty    = x * sin + y * cos + 100;
-  return {
-    x: tx,
-    y: ty
-  };
+  point.x = tx;
+  point.y = ty;
+  return point;
+}
+
+computePoints(s: Istat[]): string {
+  const total: number = s.length;
+  let points = '';
+  let point: Ipoint;
+  for (let i = 0; i < total; i++) {
+    point = this.valueToPoint(s[i].value, i, total);
+    points.concat(point.x.toString(), ',', point.y.toString(), ' ');
+  }
+  return points;
 }
 
 }
