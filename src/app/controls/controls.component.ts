@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Istat, StatService } from 'app/stat.service';
 
 // app-controls is a bunch of knobs/dials/buttons to change the svg
 
@@ -16,47 +17,27 @@ import { Component } from '@angular/core';
       <input name="newlabel" [(ngModel)]="newLabel">
       <button (click)="addStat()">Add a Stat</button>
     </form>
-    <pre id="raw">{{ stats | json }}</pre>
   </div>
   `,
   styles: []
 })
 export class ControlsComponent {
+  @Input() stats: Istat[];
   newLabel: string;
-  stats: Istat[] = [
-    {label: 'A', value: 100},
-    {label: 'B', value: 100},
-    {label: 'C', value: 100},
-    {label: 'D', value: 100},
-    {label: 'E', value: 100},
-    {label: 'F', value: 100}
-  ]
-  constructor() { }
+  statservice: StatService;
+
+  constructor(statservice: StatService) {
+    this.statservice = statservice;
+  }
 
   addStat() {
     if (!this.newLabel) { return; } // do nothing if empty
-    this.stats.push({
-      label: this.newLabel,
-      value: 100
-    });
+    this.statservice.addStat(this.newLabel);
     this.newLabel = '';
   }
   removeStat(s: Istat) {
-    if(this.stats.length > 3) {
-      this.stats.splice(this.stats.indexOf(s), 1);
-    } else {
-      alert('you need atleast 3 stats!');
-    }
+    this.statservice.removeStat(s);
   }
 
 }
 
-export interface Istat {
-  label: string;
-  value: number;
-}
-
-export interface Ipoint {
-  x: number;
-  y: number;
-}

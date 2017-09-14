@@ -7,12 +7,14 @@ import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { ControlsComponent } from './controls/controls.component';
 import { GraphComponent } from './graph/graph.component';
+import { DataviewComponent } from './dataview/dataview.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ControlsComponent,
-    GraphComponent
+    GraphComponent,
+    DataviewComponent
   ],
   imports: [
     BrowserModule,

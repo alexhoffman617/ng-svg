@@ -1,6 +1,7 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { GraphComponent } from './graph/graph.component';
 import { ControlsComponent } from './controls/controls.component';
+import { Istat, StatService } from 'app/stat.service';
 
 @Component({
   selector: 'app-root',
@@ -9,19 +10,20 @@ import { ControlsComponent } from './controls/controls.component';
     {{title}}
   </h1>
   <app-controls></app-controls>
-  <app-graph [stats]="stats"></app-graph>
+  <app-graph *ngIf="stats" [stats]="stats"></app-graph>
+  <app-dataview [stats]="stats"></app-dataview>
   `,
   styles: []
 })
-export class AppComponent implements AfterViewInit {
-  @ViewChild(ControlsComponent)
-  private controlscomponent: ControlsComponent;
-  title = 'Working with SVGs!';
-  stats = {};
+export class AppComponent implements OnInit {
+  title = 'SVG Plot';
+  stats: Istat[];
 
-  ngAfterViewInit() {
-    this.stats = this.controlscomponent.stats;
+  constructor(statservice: StatService) {
+
+   }
+
+  ngOnInit() {
+    this.stats = statservice.stats;
   }
-
-
 }
