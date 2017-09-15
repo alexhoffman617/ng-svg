@@ -10,20 +10,20 @@ import { Istat, StatService } from 'app/stat.service';
     {{title}}
   </h1>
   <app-controls></app-controls>
-  <app-graph *ngIf="stats" [stats]="stats"></app-graph>
+  <app-graph></app-graph>
   <app-dataview [stats]="stats"></app-dataview>
   `,
-  styles: []
+  styles: [],
+  providers: [StatService]
 })
 export class AppComponent implements OnInit {
   title = 'SVG Plot';
   stats: Istat[];
-
-  constructor(statservice: StatService) {
-
+  constructor(private statservice: StatService) {
    }
 
   ngOnInit() {
-    this.stats = statservice.stats;
+    this.stats = this.statservice.getStats();
+    console.log(this.stats);
   }
 }

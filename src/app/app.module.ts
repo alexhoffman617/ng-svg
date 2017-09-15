@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ControlsComponent } from './controls/controls.component';
 import { GraphComponent } from './graph/graph.component';
 import { DataviewComponent } from './dataview/dataview.component';
+import { StatService } from 'app/stat.service';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { DataviewComponent } from './dataview/dataview.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [StatService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

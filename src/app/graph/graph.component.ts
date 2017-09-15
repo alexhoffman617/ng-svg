@@ -1,16 +1,20 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Istat } from 'app/stat.service';
+import { StatService, Istat } from 'app/stat.service';
 
 
 @Component({
   selector: 'app-graph',
   template: `
     <div>
-      <svg width="200" height="200">
+      <svg width="300" height="200">
         <g>
-          <polygon [attr.points]="points"></polygon>
+          <polygon [attr.points]="computePoints(stats)"></polygon>
           <circle cx="100" cy="100" r="80"></circle>
-          <!-- <text *ngFor="let stat of stats; index as i">{{stat.label}}</text> -->
+          <text *ngFor="let stat of stats; index as i" 
+            [attr.x]="labelPoint(stats,i,'x')"
+            [attr.y]="labelPoint(stats,i,'y')">
+            {{stat.label}}
+          </text>
         </g>
       </svg>
     </div>
@@ -38,22 +42,23 @@ import { Istat } from 'app/stat.service';
 })
 
 export class GraphComponent implements OnInit {
-  @Input() stats: Istat[];
-  points: string;
+  stats: Istat[];
+  polypoints: string;
+  points: Ipoint[];
+  total: number;
 
-  constructor() {
-    console.log('stats in constructor is', this.stats);
+  constructor(private statservice: StatService) {
   }
 
   ngOnInit() {
-    this.points = this.computePoints(this.stats);
-    console.log('stats in OnInit() is', this.stats);
-    console.log('points is', this.points);
+    this.stats = this.statservice.getStats();
+    this.total = this.stats.length;
+    this.polypoints = this.computePoints(this.stats);
   }
 
   // math helper...
   valueToPoint (value: number, index: number, total: number): Ipoint {
-    let point: Ipoint;
+    let point: Ipoint = {x: 0, y: 0};
     let x     = 0;
     let y     = -value * 0.8;
     let angle = Math.PI * 2 / total * index;
@@ -61,18 +66,30 @@ export class GraphComponent implements OnInit {
     let sin   = Math.sin(angle);
     let tx    = x * cos - y * sin + 100;
     let ty    = x * sin + y * cos + 100;
-    point.x = tx;
-    point.y = ty;
+    point.x = Math.round(tx);
+    point.y = Math.round(ty);
     return point;
   }
 
-  computePoints(s): string {
+  labelPoint(stats: Istat[], i: number, d: string): number {
+    let coord;
+    let total = stats.length;
+    let point = this.valueToPoint(stats[i].value, i, total);
+    if (d === 'x') {
+      coord = point.x;
+    } else {
+      coord = point.y;
+    }
+    return coord;
+  }
+
+  computePoints(s: Istat[]): string {
     const total: number = s.length;
     let points = '';
-    let point: Ipoint;
     for (let i = 0; i < total; i++) {
-      point = this.valueToPoint(s[i].value, i, total);
-      points.concat(point.x.toString(), ',', point.y.toString(), ' ');
+      let point = this.valueToPoint(s[i].value, i, total);
+      let str = point.x.toString() + ',' + point.y.toString() + ' ';
+      points = points + str;
     }
     return points;
   }

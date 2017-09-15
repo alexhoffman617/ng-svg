@@ -2,16 +2,19 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class StatService {
-  stats: Istat[] = [
-    {label: 'A', value: 100},
-    {label: 'B', value: 100},
-    {label: 'C', value: 100},
-    {label: 'D', value: 100},
-    {label: 'E', value: 100},
-    {label: 'F', value: 100}
+  private stats: Istat[] = [
+    {label: 'Combat', value: 90},
+    {label: 'Endurance', value: 80},
+    {label: 'Charm', value: 80},
+    {label: 'Sneak', value: 60},
+    {label: 'Magic', value: 100},
   ];
 
   constructor() { }
+
+  getStats(): Istat[] {
+    return this.stats;
+  }
 
   addStat(newLabel: string) {
     if (!newLabel) { return; } // do nothing if empty

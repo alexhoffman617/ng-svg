@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Istat, StatService } from 'app/stat.service';
 
 // app-controls is a bunch of knobs/dials/buttons to change the svg
@@ -21,13 +21,15 @@ import { Istat, StatService } from 'app/stat.service';
   `,
   styles: []
 })
-export class ControlsComponent {
-  @Input() stats: Istat[];
+export class ControlsComponent implements OnInit {
   newLabel: string;
-  statservice: StatService;
-
-  constructor(statservice: StatService) {
+  stats: Istat[];
+  constructor(private statservice: StatService) {
     this.statservice = statservice;
+  }
+
+  ngOnInit() {
+    this.stats = this.statservice.getStats();
   }
 
   addStat() {
