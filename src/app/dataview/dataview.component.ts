@@ -3,7 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 @Component({
   selector: 'app-dataview',
   template: `
-    <pre id="raw">{{ stats | json }}</pre>
+    <pre id="raw" class="json">{{ stats | json }}</pre>
   `,
   styles: []
 })

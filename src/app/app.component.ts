@@ -1,29 +1,31 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { GraphComponent } from './graph/graph.component';
-import { ControlsComponent } from './controls/controls.component';
-import { Istat, StatService } from 'app/stat.service';
 
 @Component({
   selector: 'app-root',
   template: `
   <h1>
-    {{title}}
+    <a routerLink='/'>{{title}}</a>
   </h1>
-  <app-controls></app-controls>
-  <app-graph></app-graph>
-  <app-dataview [stats]="stats"></app-dataview>
+  <nav>
+    <a routerLink='/stats' routerLinkActive="active">Stats Component</a>
+    <a routerLink='/beam' routerLinkActive="active">Beam Component</a>
+    <a routerLink='/section' routerLinkActive="active">Section Component</a>
+  </nav>
+
+  <router-outlet></router-outlet>
   `,
-  styles: [],
-  providers: [StatService]
+  styles: [`
+
+    `
+  ],
+  providers: []
 })
 export class AppComponent implements OnInit {
-  title = 'SVG Plot';
-  stats: Istat[];
-  constructor(private statservice: StatService) {
+  title = 'SVG Playground'
+  constructor() {
    }
 
   ngOnInit() {
-    this.stats = this.statservice.getStats();
-    console.log(this.stats);
+
   }
 }

@@ -1,1 +1,38 @@
 /* You can add global styles to this file, and also import other style files */
+
+html {
+    font-family: system-ui, sans-serif;
+}
+
+body {
+    margin: 40px auto;
+    max-width: 650px;
+    line-height: 1.6;
+    font-size: 18px;
+    color: #444;
+    padding: 0 10px;
+}
+
+h1, h2, h3 {
+    line-height: 1.2;
+}
+
+.json {
+    font-family: monospace;
+    line-height: 1.0;
+    font-size: 14px;
+}
+
+nav {
+    margin-bottom: 16px;
+}
+
+nav a {
+    text-decoration: none;
+    margin-right: 8px;
+}
+nav .active {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
