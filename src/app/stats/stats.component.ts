@@ -14,12 +14,11 @@ import { Istat, StatService } from 'app/stat.service';
 })
 export class StatsComponent implements OnInit {
   stats: Istat[];
-  
+
   constructor(private statservice: StatService) { }
 
   ngOnInit() {
     this.stats = this.statservice.getStats();
-    console.log(this.stats);
   }
 
 }

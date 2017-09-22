@@ -14,6 +14,7 @@ import { StatsComponent } from "app/stats/stats.component";
 import { BeamComponent } from "app/beam/beam.component";
 import { SectionComponent } from "app/section/section.component";
 import { HomeComponent } from "app/home/home.component";
+import { DimensionComponent } from './dimension/dimension.component';
 
 const appRoutes: Routes = [
   {path: 'stats', component: StatsComponent},
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
     HomeComponent,
     ControlsComponent,
     GraphComponent,
-    DataviewComponent
+    DataviewComponent,
+    DimensionComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,7 @@ const appRoutes: Routes = [
     HttpModule,
     RouterModule.forRoot(
       appRoutes,
-      { enableTracing: true} //for debugging only
+      //{ enableTracing: true} //for debugging only
     )
   ],
   providers: [StatService],

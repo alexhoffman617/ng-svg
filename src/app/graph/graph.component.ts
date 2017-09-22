@@ -7,15 +7,15 @@ import { StatService, Istat } from 'app/stat.service';
   template: `
     <div>
       <svg width="300" height="200">
-        <g>
-          <polygon [attr.points]="computePoints(stats)"></polygon>
-          <circle cx="100" cy="100" r="80"></circle>
-          <text *ngFor="let stat of stats; index as i" 
+        <svg:g>
+          <svg:polygon [attr.points]="computePoints(stats)"></svg:polygon>
+          <svg:circle cx="100" cy="100" r="80"></svg:circle>
+          <svg:text *ngFor="let stat of stats; index as i" 
             [attr.x]="labelPoint(stats,i,'x')"
             [attr.y]="labelPoint(stats,i,'y')">
             {{stat.label}}
-          </text>
-        </g>
+          </svg:text>
+        </svg:g>
       </svg>
     </div>
   `,
