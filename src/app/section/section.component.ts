@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { DimensionComponent } from '../dimension/dimension.component'
+import { Idim } from 'app/idim';
 
 @Component({
   selector: 'app-section',
@@ -18,6 +20,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
     </div>
     <svg width="300" height="300" xmlns="http://www.w3.org/2000/svg">
       <svg:path [attr.d]="pathIshape(x1,y1,h,b,tw,tf)" fill="transparent" stroke="black"/>
+      <svg:g app-dimension *ngFor="let d of dims" [dim]="d" />
     </svg>
   </div>
   `,
@@ -40,9 +43,8 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 export class SectionComponent implements OnInit, AfterViewInit {
   @ViewChild('f') form;
   title = 'Standard steel shapes with dimension labels';
-  dims: Idim[] = []
   x1 = 10
-  y1 = 10
+  y1 = 50
   h = 200
   b = 100
   tw = 6
@@ -51,13 +53,15 @@ export class SectionComponent implements OnInit, AfterViewInit {
   A: number
   S: number
   path: string
+  dims: Idim[] = [
+    {p1: [this.x1+this.b, this.y1], p2: [this.x1+this.b, this.y1 + this.h], label: 'h'}
+  ];
 
   constructor() { }
 
   ngOnInit() {
     this.path = this.pathIshape(this.x1, this.y1, this.h, this.b, this.tw, this.tf);
     this.calculateProperties();
-
   }
 
   ngAfterViewInit() {
@@ -71,9 +75,19 @@ export class SectionComponent implements OnInit, AfterViewInit {
       this.S = this.IshapeS(this.h, this.b, this.tw, this.tf);
     }
 
+  calculateDims() {
+    this.dims = [
+      {p1: [this.x1, this.y1], p2: [this.x1, this.y1 + this.h], label: 'h'}
+    ]
+  }
+
   // addDimension adds a linear dimension with label from pt (x1,y1) to (x2,y2)
   addDimension(x1: number, y1: number, x2: number, y2: number, label: string) {
-    this.dims.push({x1: x1, y1: y1, x2: x2, y2: y2, label: label})
+    // search for existing dim at same coords, update label if found
+
+    // else add a new dimension
+    this.dims.push({p1: [x1, y1], p2: [x2, y2], label: label})
+    // send some cmd to DimensionComponent to update
   }
 
   pathIshape(x1, y1, h, b, tw, tf): string {
@@ -107,12 +121,4 @@ export class SectionComponent implements OnInit, AfterViewInit {
      return 1/6/d*(b*d*d*d-(b-w)*(d-2*t)*(d-2*t)*(d-2*t))
    }
 
-}
-
-export interface Idim {
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
-  label: string
 }
