@@ -4,9 +4,7 @@ import { Idim } from 'app/idim';
 @Component({
   selector: '[app-dimension]',
   template: `
-    <svg:g>
-      <svg:path [attr.d]="addDim(dim.p1,dim.p2,dim.label)" stroke="black" fill="transparent" />
-    </g>
+      <svg:path [attr.d]="addDim(dim.p1,dim.p2,dim.label)" stroke="#808080" fill="transparent" />
   `,
   styles: []
 })
@@ -32,16 +30,16 @@ export class DimensionComponent implements OnInit, AfterViewInit {
     let y1 = p1[1];
     let y2 = p2[1];
     let s = '';
-    let a = Math.atan((y2 - y1 / (x2 - x1)));
+    let a = -1*Math.atan((y2 - y1 / (x2 - x1)));
     let ca = Math.cos(a);
     let sa = Math.sin(a);
     let L = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-    s = s + 'M' + x1 + ' ' +y1; // starting point
-    s = s + ' l' + standoff * ca + ' ' + standoff * sa; // first standoff line
-    s = s + ' m' + overrun * (ca + sa) + ' ' + overrun * (sa - ca); // move to dim line start point
-    s = s + ' l' + L * ca + ' ' + L * sa; // dim line
-    s = s + ' m' + x2 + ' ' + y2; // move to second standoff line
-    s = s + ' l' + standoff * ca + ' ' + standoff * sa; // second standoff line
+    s = s + 'M ' + x1 + ' ' + y1; // starting point
+    s = s + ' l ' + this.roundN(standoff * ca, 2) + ' ' + this.roundN(standoff * sa, 2); // first standoff line
+    s = s + ' m ' + this.roundN(overrun * (ca + sa), 2) + ' ' + this.roundN(overrun * (sa - ca), 2); // move to dim line start point
+    s = s + ' l ' + this.roundN(L * ca, 2) + ' ' + this.roundN(L * sa, 2); // dim line
+    s = s + ' M ' + x2 + ' ' + y2; // move to second standoff line
+    s = s + ' l ' + this.roundN(standoff * ca, 2) + ' ' + this.roundN(standoff * sa, 2); // second standoff line
     return s
   }
 
