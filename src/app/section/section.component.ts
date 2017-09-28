@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { DimensionComponent } from '../dimension/dimension.component'
 import { Idim } from 'app/idim';
+import 'rxjs/add/operator/debounceTime';
 
 @Component({
   selector: 'app-section',
@@ -53,20 +54,23 @@ export class SectionComponent implements OnInit, AfterViewInit {
   A: number
   S: number
   path: string
-  dims: Idim[] = [
-    {p1: [this.x1+this.b, this.y1], p2: [this.x1+this.b, this.y1 + this.h], label: 'h'}
-  ];
+  dims: Idim[]
 
   constructor() { }
 
   ngOnInit() {
     this.path = this.pathIshape(this.x1, this.y1, this.h, this.b, this.tw, this.tf);
-    this.calculateProperties();
+    this.doCalcs();
   }
 
   ngAfterViewInit() {
-    console.log(this.form)
-    this.form.control.valueChanges.subscribe(values => this.calculateProperties());
+    console.log(this.form);
+    this.form.control.valueChanges.debounceTime(500).subscribe(value => this.doCalcs())
+  }
+
+  doCalcs() {
+    this.calculateProperties();
+    this.calculateDims();
   }
 
   calculateProperties() {
@@ -77,7 +81,8 @@ export class SectionComponent implements OnInit, AfterViewInit {
 
   calculateDims() {
     this.dims = [
-      {p1: [this.x1, this.y1], p2: [this.x1, this.y1 + this.h], label: 'h'}
+      {p1: [this.x1 + this.b, this.y1], p2: [this.x1 + this.b, this.y1 + this.h], label: 'h'},
+      {p1: [this.x1, this.y1], p2: [this.x1 + this.b, this.y1], label: 'b'}
     ]
   }
 
