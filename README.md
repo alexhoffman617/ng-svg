@@ -1,6 +1,12 @@
 # ng-svg
 
-This is a simple angular.io application to learn how to interact with SVG elements in Angular. Think of it as an SVG playground. You can add a new component to the app as long as it uses SVGs, and ideally the code will be a useful reference. 
+This is a simple angular.io application to learn how to interact with SVG elements in Angular. Think of it as an SVG playground. You can add a new component to the app as long as it uses SVGs in an interactive way, and ideally the code will demonstrate a technique or design pattern that is unique from other components.
+
+![home page](https://raw.githubusercontent.com/jchatkinson/ng-svg/master/main.jpg)
+
+An example interactive component:
+
+![stats component](https://raw.githubusercontent.com/jchatkinson/ng-svg/master/stats.jpg)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0.
 
