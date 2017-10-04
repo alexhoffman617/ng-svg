@@ -17,6 +17,7 @@ import { Component, ViewChild, OnInit } from '@angular/core';
   styles: [`
 
     `
+
   ],
   providers: []
 })

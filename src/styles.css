@@ -6,7 +6,7 @@ html {
 
 body {
     margin: 40px auto;
-    max-width: 650px;
+    width: 85%;
     line-height: 1.6;
     font-size: 18px;
     color: #444;
