@@ -15,6 +15,7 @@ import { BeamComponent } from "app/beam/beam.component";
 import { SectionComponent } from "app/section/section.component";
 import { HomeComponent } from "app/home/home.component";
 import { DimensionComponent } from './dimension/dimension.component';
+import { TileComponent } from './home/tile/tile.component';
 
 const appRoutes: Routes = [
   {path: 'stats', component: StatsComponent},
@@ -34,7 +35,8 @@ const appRoutes: Routes = [
     ControlsComponent,
     GraphComponent,
     DataviewComponent,
-    DimensionComponent
+    DimensionComponent,
+    TileComponent
   ],
   imports: [
     BrowserModule,
