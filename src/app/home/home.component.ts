@@ -24,7 +24,7 @@ export class HomeComponent implements OnInit {
     {id: 'section', title: 'Sectional Properties', desc: 'Properties of a Section', img: 'http://via.placeholder.com/300', order: 2, url: '/section'},
     {id: 'bar', title: 'Bar Chart', desc: 'A simple svg bar chart', img: 'http://via.placeholder.com/300', order: 3, url: '/barchart'},
     {id: 'pie', title: 'Pie Chart', desc: 'A simple svg pie chart', img: 'http://via.placeholder.com/300', order: 4, url: '/piechart'},
-    {id: 'new', title: 'Add your own', desc: 'fork this repository and add your own interactive svg', img: '/assets/plus.svg', order: 4, url: 'https://github.com/jchatkinson/ng-svg'},
+    {id: 'new', title: 'Add your own', desc: 'fork this repository and add your own interactive svg', img: '/assets/plus.svg', order: 4, url: 'https://github.com/jchatkinson/ng-svg'}
   ]
 
   constructor() { }
